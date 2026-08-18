@@ -1,0 +1,5 @@
+type,partId,name,stock,cost,type based proporties
+Bolt,1,Bolt,35,15.5,5.0,0.5
+Screw,2,Screw,15,5.5,10,Flat,Slotted
+Nut,3,Nut,45,25.5,5.0,5
+Bearing,4,Bearing,20,45.0,5.0,0.2
