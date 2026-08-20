@@ -23,6 +23,10 @@ class Inventory {
 
     public Inventory() {}
 
+    public int getInventorySize() {
+        return inventory.size();
+    }
+
     public void addItem(Hardware part) {
         inventory.put(part.getPartId(), part);
     }
@@ -90,57 +94,56 @@ class Inventory {
                 String name = parts[2];
                 int stock = Integer.parseInt(parts[3]);
                 double cost = Double.parseDouble(parts[4]);
-                if (parts[0] == "Bolt") {
+                if (parts[0].equals("Bolt")) {
                     double length = Double.parseDouble(parts[5]);
                     double diameter = Double.parseDouble(parts[6]);
                     addItem(new Bolt(partId, name, stock, cost, length, diameter));
-                } else if (parts[0] == "Nut") {
+                } else if (parts[0].equals("Nut")) {
                     double diameter = Double.parseDouble(parts[5]);
                     int threadPitch = Integer.parseInt(parts[6]);
                     addItem(new Nut(partId, name, stock, cost, diameter, threadPitch));
-                } else if (parts[0] == "Gear") {
+                } else if (parts[0].equals("Gear")) {
                     int teethCount = Integer.parseInt(parts[5]);
                     String material = parts[6];
                     double pitchDiameter = Double.parseDouble(parts[7]);
                     addItem(new Gear(partId, name, stock, cost, teethCount, material, pitchDiameter));
-                } else if (parts[0] == "Washer") {
+                } else if (parts[0].equals("Washer")) {
                     double outerDiameter = Double.parseDouble(parts[5]);
                     double innerDiameter = Double.parseDouble(parts[6]);
                     double thickness = Double.parseDouble(parts[7]);
                     addItem(new Washer(partId, name, stock, cost, outerDiameter, innerDiameter, thickness));
-                } else if (parts[0] == "Wire") {
+                } else if (parts[0].equals("Wire")) {
                     double guage = Double.parseDouble(parts[5]);
                     double lenMeter = Double.parseDouble(parts[6]);
                     String insulationColor = parts[7];
                     addItem(new Wire(partId, name, stock, cost, guage, lenMeter, insulationColor));
-                } else if (parts[0] == "Bearing") {
+                } else if (parts[0].equals("Bearing")) {
                     double boreDiameter = Double.parseDouble(parts[5]);
                     double loadRating = Double.parseDouble(parts[6]);
                     addItem(new Bearing(partId, name, stock, cost, boreDiameter, loadRating));
-                } else if (parts[0] == "ThreadedRod") {
+                } else if (parts[0].equals("ThreadedRod")) {
                     double diameter = Double.parseDouble(parts[5]);
                     double length = Double.parseDouble(parts[6]);
                     int threadPitch = Integer.parseInt(parts[7]);
                     addItem(new ThreadedRod(partId, name, stock, cost, diameter, length, threadPitch));
-                } else if (parts[0] == "DrillBit") {
+                } else if (parts[0].equals("DrillBit")) {
                     double diameter = Double.parseDouble(parts[5]);
                     String type = parts[6];
                     addItem(new DrillBit(partId, name, stock, cost, diameter, type));
-                } else if (parts[0] == "Screwdriver") {
+                } else if (parts[0].equals("Screwdriver")) {
                     double diameter = Double.parseDouble(parts[5]);
                     String type = parts[6];
                     addItem(new Screwdriver(partId, name, stock, cost, diameter, type));
-                } else if (parts[0] == "ScrewdriverBit") {
+                } else if (parts[0].equals("ScrewdriverBit")) {
                     double diameter = Double.parseDouble(parts[5]);
                     String type = parts[6];
                     addItem(new ScrewdriverBit(partId, name, stock, cost, diameter, type));
-                } else if (parts[0] == "Screw") {
+                } else if (parts[0].equals("Screw")) {
                     int diameter = Integer.parseInt(parts[5]);
                     String headShape = parts[6];
                     String driveType = parts[7];
                     addItem(new Screw(partId, name, stock, cost, diameter, headShape, driveType));
                 }
-
             }
         } catch(IOException e) {
             System.out.println("There is a problem with the file.");

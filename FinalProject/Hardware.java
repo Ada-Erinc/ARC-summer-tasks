@@ -9,6 +9,19 @@ abstract class Hardware {
     protected double cost;
 
     public Hardware(int partId, String name, int stock, double cost) {
+        if (partId < 0) {
+            throw new IllegalArgumentException("Part id must be a positive number.");
+        }
+        if (name.isEmpty()) {
+            throw new IllegalArgumentException("The part must have a name.");
+        }
+        if (stock < 0) {
+            throw new IllegalArgumentException("The part's stock can not be a negetive number.");
+        }
+        if (cost < 0) {
+            throw new IllegalArgumentException("The part's cost can not be a negetive number.");
+        }
+
         this.partId = partId;
         this.name = name;
         this.stock = stock;
