@@ -54,11 +54,11 @@ class Inventory {
         }
     }
 
-    public List<Hardware> listInventory() {
-        return listInventory(SortType.PARTID, SortOrder.ASCENDING);
+    public void listInventory() {
+        listInventory(SortType.PARTID, SortOrder.ASCENDING);
     }
 
-    public List<Hardware> listInventory(SortType sortType, SortOrder sortOrder) {
+    public void listInventory(SortType sortType, SortOrder sortOrder) {
 
         List<Hardware> hardwareList = new ArrayList<Hardware>(inventory.values());
 
@@ -80,7 +80,17 @@ class Inventory {
 
         hardwareList.sort(comparator);
 
-        return hardwareList;
+        for (int i = 0; i < hardwareList.size(); i++) {
+            if (sortType == SortType.QUANTITY) {
+                System.out.println(hardwareList.get(i) + " " + hardwareList.get(i).getStock() + " in stock.");
+            } else if (sortType == SortType.COST) {
+                System.out.println(hardwareList.get(i) + " costs " + hardwareList.get(i).getCost());
+            } else if (sortType == SortType.PARTID) {
+                System.out.println(hardwareList.get(i));
+            } else {
+                System.out.println(hardwareList.get(i) + " total cost is " + hardwareList.get(i).getTotalCost());
+            }
+        }
     }
 
     // I chose a wider, denser format where I parse remaining columns differently based on the type value.

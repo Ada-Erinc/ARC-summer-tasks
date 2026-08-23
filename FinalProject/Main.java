@@ -1,35 +1,11 @@
-import java.util.List;
 import java.util.Scanner;
 
 
 public class Main {
     static Scanner scanner = new Scanner(System.in);
 
-    private static void test(Inventory inventory) {
-        // inventory.addItem(new Bolt(1, "Bolt", 35, 15.5, 5.0, 0.5));
-        // inventory.addItem(new Screw(2, "Screw", 15, 5.5, 10, "Flat", "Slotted"));
-        // inventory.addItem(new Nut(3, "Nut", 45, 25.5, 5.0, 5));
-        // inventory.addItem(new Bearing(4, "Bearing", 20, 45, 5.0, 0.20));
-        inventory.importCsv("inventory.csv");
-
-        //Test
-        Inventory.SortType sortType = Inventory.SortType.QUANTITY;
-        Inventory.SortOrder sortOrder = Inventory.SortOrder.DESCENDING;
-        List<Hardware> inventoryList = inventory.listInventory(sortType, sortOrder);
-        System.out.println("\nInventory listed by " + sortType + " in " + sortOrder + " order");
-        for (int i = 0; i < inventoryList.size(); i++) {
-            Hardware item = inventoryList.get(i);
-            System.out.println((i+1) + ". " + item);
-        }
-        System.out.println();
-
-        inventory.isUnderStocked(20);
-        // inventory.exportCsv("inventory2.csv");
-    }
-
     public static void main(String[] args) {
         Inventory inventory = new Inventory();
-        // test(inventory);
 
         //task
         while (true) {
@@ -39,6 +15,7 @@ public class Main {
             while (true) {
                 System.out.print("\nChoose an Option:");
                 choice = scanner.nextInt();
+                scanner.nextLine();
                 if (choice < 0 || choice > 9) {
                     System.out.println("\nPlease enter a choice.");
                 } else {
@@ -49,7 +26,7 @@ public class Main {
                 addingItems(inventory);
             } else if (choice == 2) {
                 if (inventory.getInventorySize() == 0) {
-                    System.out.println("Inventory empty. Please first add an item.");
+                    System.out.println("\nInventory empty. Please first add an item.");
                 } else {
                     int Id = getIntInput("\nEnter the Id of the item you want to remove: ");
                     inventory.removeItem(Id);
@@ -68,7 +45,15 @@ public class Main {
             } else if (choice == 7) {
                 inventory.exportCsv("inventory.csv");
             } else if (choice == 8) {
-                break;
+                String exit = getStringInput("\nHave you exported yet?(Y/N): ");
+                if (exit.equals("N") || exit.equals("n")) {
+                    String export = getStringInput("Are you sure you want to exit without exporting?(Y/N): ");
+                    if (export.equals("Y") || export.equals("y")) {
+                        break;
+                    }
+                } else {
+                    break;
+                }
             }
         }
     }
@@ -132,54 +117,54 @@ public class Main {
         String name = getStringInput("Name: ");
         int stock = getIntInput("Stock: ");
         double cost = getDoubleInput("Cost: ");
-        if (type == "Bolt") {
-            double length = getDoubleInput("\nLength: ");
-            double diameter = getDoubleInput("\nDiameter: ");
+        if (type.equals("Bolt")) {
+            double length = getDoubleInput("Length: ");
+            double diameter = getDoubleInput("Diameter: ");
             inventory.addItem(new Bolt(partID, name, stock, cost, length, diameter));
-        } else if (type == "Nut") {
-            double diameter = getDoubleInput("\nDiameter: ");
-            int threadPitch = getIntInput("\nThread pitch: ");
+        } else if (type.equals("Nut")) {
+            double diameter = getDoubleInput("Diameter: ");
+            int threadPitch = getIntInput("Thread pitch: ");
             inventory.addItem(new Nut(partID, name, stock, cost, diameter, threadPitch));
-        } else if (type == "Gear") {
-            int teethCount = getIntInput("\nTeeth count: ");
-            String material = getStringInput("\nMaterial: ");
-            double pitchDiameter = getDoubleInput("\nPitch diameter: ");
+        } else if (type.equals("Gear")) {
+            int teethCount = getIntInput("Teeth count: ");
+            String material = getStringInput("Material: ");
+            double pitchDiameter = getDoubleInput("Pitch diameter: ");
             inventory.addItem(new Gear(partID, name, stock, cost, teethCount, material, pitchDiameter));
-        } else if (type == "Washer") {
-            double outerDiameter = getDoubleInput("\nOuter diameter: ");
-            double innerDiameter = getDoubleInput("\nInner diameter: ");
-            double thickness = getDoubleInput("\nThickness: ");
+        } else if (type.equals("Washer")) {
+            double outerDiameter = getDoubleInput("Outer diameter: ");
+            double innerDiameter = getDoubleInput("Inner diameter: ");
+            double thickness = getDoubleInput("Thickness: ");
             inventory.addItem(new Washer(partID, name, stock, cost, outerDiameter, innerDiameter, thickness));
-        } else if (type == "Wire") {
-            double guage = getDoubleInput("\nGuage: ");
-            double lenMeter = getDoubleInput("\nLength in meters: ");
-            String insulationColor = getStringInput("\nInsulation color: ");
+        } else if (type.equals("Wire")) {
+            double guage = getDoubleInput("Guage: ");
+            double lenMeter = getDoubleInput("Length in meters: ");
+            String insulationColor = getStringInput("Insulation color: ");
             inventory.addItem(new Wire(partID, name, stock, cost, guage, lenMeter, insulationColor));
-        } else if (type == "Bearing") {
-            double boreDiameter = getDoubleInput("\nBore diameter: ");
-            double loadRating = getDoubleInput("\nLoad rating: ");
+        } else if (type.equals("Bearing")) {
+            double boreDiameter = getDoubleInput("Bore diameter: ");
+            double loadRating = getDoubleInput("Load rating: ");
             inventory.addItem(new Bearing(partID, name, stock, cost, boreDiameter, loadRating));
-        } else if (type == "ThreadedRod") {
-            double diameter = getDoubleInput("\nDiameter: ");
-            double length = getDoubleInput("\nLength");
-            int threadPitch = getIntInput("\nThread pitch: ");
+        } else if (type.equals("ThreadedRod")) {
+            double diameter = getDoubleInput("Diameter: ");
+            double length = getDoubleInput("Length");
+            int threadPitch = getIntInput("Thread pitch: ");
             inventory.addItem(new ThreadedRod(partID, name, stock, cost, diameter, length, threadPitch));
-        } else if (type == "DrillBit") {
-            double diameter = getDoubleInput("\nDiameter: ");
-            String type2 = getStringInput("\nType: ");
+        } else if (type.equals("DrillBit")) {
+            double diameter = getDoubleInput("Diameter: ");
+            String type2 = getStringInput("Type: ");
             inventory.addItem(new DrillBit(partID, name, stock, cost, diameter, type2));
-        } else if (type == "Screwdriver") {
-            double diameter = getDoubleInput("\nDiameter: ");
-            String type2 = getStringInput("\nType: ");
+        } else if (type.equals("Screwdriver")) {
+            double diameter = getDoubleInput("Diameter: ");
+            String type2 = getStringInput("Type: ");
             inventory.addItem(new Screwdriver(partID, name, stock, cost, diameter, type2));
-        } else if (type == "ScrewdriverBit") {
-            double diameter = getDoubleInput("\nDiameter: ");
-            String type2 = getStringInput("\nType: ");
+        } else if (type.equals("ScrewdriverBit")) {
+            double diameter = getDoubleInput("Diameter: ");
+            String type2 = getStringInput("Type: ");
             inventory.addItem(new ScrewdriverBit(partID, name, stock, cost, diameter, type2));
-        } else if (type == "Screw") {
-            int threadPitch = getIntInput("\nThread pitch: ");
-            String headShape = getStringInput("\nHead shape: ");
-            String driveType = getStringInput("\nDrive type: ");
+        } else if (type.equals("Screw")) {
+            int threadPitch = getIntInput("Thread pitch: ");
+            String headShape = getStringInput("Head shape: ");
+            String driveType = getStringInput("Drive type: ");
             inventory.addItem(new Screw(partID, name, stock, cost, threadPitch, headShape, driveType));
         }
     }
